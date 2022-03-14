@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useStateValue } from "./state_provider/StateProvider";
 
 function App() {
+  const [state, dispatch] = useStateValue();
+  const handleOperation = (operator) => {
+    switch (operator) {
+      case "+":
+        dispatch({
+          type: "SAVE_CALCULATE_RESULT",
+          payload: state.counter + 1,
+        });
+        break;
+      case "-":
+        dispatch({
+          type: "SAVE_CALCULATE_RESULT",
+          payload: state.counter - 1,
+        });
+        break;
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>{state.counter}</p>
+      <button onClick={() => handleOperation("+")}>Add</button>
+      <button onClick={() => handleOperation("-")}>Sub</button>
     </div>
   );
 }
